@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        {% block head %}
+        <title>GARUDA |</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/user.css') }}"/>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom.min.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/nprogress.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-progressbar-3.3.4.min.css') }}"/>
+        {% endblock %}
+    </head>
+    
+    <body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+
+                <!-- MAIN MENU -->
+                <div class="col-md-3 left_col">
+                    <div class="left_col scroll-view">
+                        <div class="navbar nav_title" style="border:0;"></div>
+                        <div class="clearfix"></div>
+                        <!-- menu profile quick info -->
+                        <div class="profile" style="text-align:center">
+                            <a href="index.html"><!--<i class="fa fa-paw"></i>--> <img src="{{ url_for('static', filename='images/garuda.png') }}" alt=""/></a>
+
+                            <!--<div class="profile_pic">
+                                <img src="images/img.jpg" alt="..." class="img-circle profile_img"/>
+                            </div>
+                            <div class="profile_info">
+                                <span>Welcome,</span>
+                                <h2>John Doe</h2>
+                            </div>-->
+                        </div>
+                        <!-- /menu profile quick info -->
+                        <br/>
+                        <!-- sidebar menu -->
+                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                            <div class="menu_section">
+                                <!--<h3>General</h3>-->
+                                <ul class="nav side-menu">
+                                    <!--<li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="index.html">Dashboard</a></li>
+                                        </ul>
+                                    </li>-->
+
+                                    <li><a><i class="fa fa-table"></i> Search <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="search.html">Query</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li><a><i class="fa fa-edit"></i> Data Entry <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="add_device.html">Add Data</a></li>
+                                            <li><a href="import.html">Import Spreadsheet</a></li>
+                                        </ul>
+                                    </li>
+                                    <!--<li><a><i class="fa fa-trash"></i> Data Delete <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="delete.html">Delete</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a><i class="fa fa-wrench"></i> Data Update<span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="update.html">Update</a></li>
+                                        </ul>
+                                    </li>-->
+
+                                    <li><a><i class="fa fa-bar-chart-o"></i> Analysis <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="recommender.html">Toxicity Analyzer</a></li>
+                                            <li><a href="eda/index.html">Auto ML</a></li>
+                                            <li><a href="neural-net/index.html">DAFD/Garuda</a></li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu_section">
+                                <!--<h3>Miscellaneous</h3>-->
+                                <ul class="nav side-menu">
+                                    <li><a><i class="fa fa-clone"></i> Help <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="documentation.html">Documentation</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a><i class="fa fa-bug"></i> About <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="about.html">Developer Team</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /sidebar menu -->
+                    </div>
+                </div>
+                <!-- /MAIN MENU -->
+
+                <!-- TOP MENU -->
+                <div class="top_nav">
+                    <div class="nav_menu">
+                        <nav>
+                            <div class="nav toggle">
+                                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                            </div>
+
+                            <ul class="nav navbar-nav navbar-right">
+                                {% if not session.logged_in %}
+                                <li class="notLoggedIn">
+                                    <li><a href="login.html">Log In   <i class="fa fa-sign-in fa-align-center"></i></a></li>
+                                </li>
+                                {% else %}
+                                <li class="userLoggedIn">
+                                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <img src="{{ url_for('static', filename='images/user.png') }}"/>
+                                        {% print session.user %}   <span class=" fa fa-angle-down"></span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-usermenu pull-right" >
+                                        <!--<li><a href="javascript:;"> Profile</a></li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span>Settings</span>
+                                            </a>
+                                        </li>-->
+                                        <li>
+                                            <form action="/logout" method="post">
+                                                <button class="logoutButton" type="submit" id="submitButton"> Log Out </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                                {% endif %}
+
+                                <!--<li role="presentation" class="dropdown" th:if="${session.username != null}">
+                                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-envelope-o"></i>
+                                    </a>
+                                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                                        <li>
+                                            <a>
+                                                <span class="image"><img src="images/user.png" alt="Profile Image" /></span>
+                                                <span>
+                                                    <span>user123</span>
+                                                    <span class="time">1 mins ago</span>
+                                                </span>
+                                                <span class="message">
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a>
+                                                <span class="image"><img src="images/user.png" alt="Profile Image" /></span>
+                                                <span>
+                                                    <span>user456</span>
+                                                    <span class="time">2 mins ago</span>
+                                                </span>
+                                                <span class="message">
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a>
+                                                <span class="image"><img src="images/user.png" alt="Profile Image" /></span>
+                                                <span>
+                                                    <span>user789</span>
+                                                    <span class="time">3 mins ago</span>
+                                                </span>
+                                                <span class="message">
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <div class="text-center">
+                                            <a>
+                                                <strong>See All Alerts</strong>
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+                                    </ul>
+                                </li>-->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <!-- /TOP MENU -->
+                {% block content %}{% endblock %}
+
+                <!-- /FOOTER -->
+                <footer>
+                    <div class="pull-right">
+                        GARUDA &copy; CIDAR Lab and MIT Broad Foundry. 2017-2018
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /FOOTER -->
+
+                <!-- JAVASCRIPT -->
+                <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+                <!-- Bootstrap -->
+                <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+                <!-- NProgress -->
+                <script src="{{ url_for('static', filename='js/nprogress.js') }}"></script>
+                <!-- bootstrap-progressbar -->
+                <script src="{{ url_for('static', filename='js/bootstrap-progressbar.min.js') }}"></script>
+                <!-- Custom Theme Scripts -->
+                <script src="{{ url_for('static', filename='js/custom.min.js') }}"></script>
+                <!-- Autosize -->
+                <script src="{{ url_for('static', filename='js/autosize.min.js') }}"></script>
+                <!-- Custom Function: OnClick, OnClose-->
+                <script>
+                    /*<![CDATA[*/
+                    $(document).ready(function () {
+
+                        $(".close-query").click(function () {
+                            var e = $(this).closest(".div-query");
+                            e.remove();
+                        });
+
+        //            	$(".query-add").click (function () {
+        //                    $(".add-button").remove();
+        //                    $(".query-container").append("<div class='form-group div-query'><div class='col-md-7 col-sm-7 col-xs-11'><input type='text' class='form-control' th:field='*{filter}' placeholder='Filter'/></div><div class='col-md-1 col-sm-1 col-xs-1'><ul class='nav panel_toolbox'><li><a class='close-query'><i class='fa fa-close'></i></a></li></ul></div></div><div class='form-group div-query'><div class='col-md-7 col-sm-7 col-xs-11'><input type='text' class='form-control' th:field='*{name}' placeholder='Name'/></div><div class='col-md-1 col-sm-1 col-xs-1'><ul class='nav panel_toolbox'><li><a class='close-query'><i class='fa fa-close'></i></a></li></ul></div></div><div class='form-group div-query'><div class='col-md-7 col-sm-7 col-xs-11'><input type='text' class='form-control' th:field='*{displayId}' placeholder='Display Id'/></div><div class='col-md-1 col-sm-1 col-xs-1'><ul class='nav panel_toolbox'><li><a class='close-query'><i class='fa fa-close'></i></a></li></ul></div></div><div class='form-group div-query'><div class='col-md-7 col-sm-7 col-xs-11'><input type='text' class='form-control' th:field='*{role}' placeholder='Role'/></div><div class='col-md-1 col-sm-1 col-xs-1'><ul class='nav panel_toolbox'><li><a class='close-query'><i class='fa fa-close'></i></a></li></ul></div></div><div class='form-group div-query'><div class='col-md-7 col-sm-7 col-xs-11'><input type='text' class='form-control' th:field='*{sequence}' placeholder='Sequence'/></div><div class='col-md-1 col-sm-1 col-xs-1'><ul class='nav panel_toolbox'><li><a class='close-query'><i class='fa fa-close'></i></a></li></ul></div></div><div class='form-group div-query'><div class='col-md-7 col-sm-7 col-xs-11'><input type='text' class='form-control' th:field='*{userSpace}' placeholder='User Space'/></div><div class='col-md-1 col-sm-1 col-xs-1'><ul class='nav panel_toolbox'><li><a class='close-query'><i class='fa fa-close'></i></a></li></ul></div></div>");
+        //                });
+
+                        $(document).on('click', '.close-query', function () {
+                            var e = $(this).closest(".div-query");
+                            e.remove();
+                        });
+                    });
+                    /*]]>*/
+                </script>
+
+                <script>
+                    function toggleQueryContainer() {
+                        var query_container = document.getElementById('query-container');
+                        if (query_container.style.display === 'none') {
+                            query_container.style.display = 'block';
+                        } else {
+                            query_container.style.display = 'none';
+                        }
+
+                        var biodesignIdContainer = document.getElementById('biodesignIdContainer');
+                        if (biodesignIdContainer.style.display === 'none') {
+                            biodesignIdContainer.style.display = 'block';
+                        } else {
+                            biodesignIdContainer.style.display = 'none';
+                        }
+                    }
+                </script>
+                <!-- Onchange combobox -->
+                <script>
+                    $(function(){
+                      // bind change event to select
+                      $('#sheet').on('change', function () {
+                          var url = $(this).val(); // get selected value
+                          if (url) { // require a URL
+                              window.location = url; // redirect
+                          }
+                      });
+                    });
+                </script>
+                <!-- /Onchange combobox -->
+                <!-- Autosize -->
+                <script>
+                  $(document).ready(function() {
+                    autosize($('.resizable_textarea'));
+                  });
+                </script>
+                <!-- /Autosize -->
+                <!-- JS -->
+                {% block add_script %}{% endblock %}
+            </div>
+        </div>
+        
+    </body>
+ </html>

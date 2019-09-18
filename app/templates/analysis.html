@@ -1,0 +1,107 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="layout :: site-head"></head>
+
+    <body>
+        <h1>Garuda</h1>
+        <h2>AutoML Pipeline?</h2>
+        <br/>
+
+        <form action="{{ url_for('eda.run') }}" method='post'>
+
+        <input type='submit' name='submit' value='supervised'/>
+        <input type='submit' name='submit' value='unsupervised'/>
+
+        <div>
+            <label>Filename:</label>
+            <input type='text' name='filename' value='{{ filename }}' readonly/>
+        </div>
+
+        <br/>
+        <table border=1>
+            <tr>
+                <th>target variable</th>
+                {% for column in columns %}
+                    <th>{{column}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in data %}
+            <tr>
+                <td><input type='checkbox' name='target' value='{{row[0]}}'/></td>
+                {% for col in row %}
+                    {% if loop.index==3 %}
+                        {% if col==0 %}
+                            <td></td>
+                        {% elif col==1 %}
+                            <td>
+                                <select name='todo_datetime'>
+                                    <option value='drop' selected>Drop</option>
+                                    <option value='category'>To Categorical</option>
+                                    <option value='factorize'>Factorize</option>
+                                </select>
+                            </td>
+                        {% elif col==2 %}
+                            <td>
+                                <select name='todo_text'>
+                                    <option value='drop' selected>Drop</option>
+                                    <option value='category'>To Categorical</option>
+                                </select>
+                            </td>
+                        {% endif %}
+                    {% else %}
+                        <td>{{col}}</td>
+                    {% endif %}
+            {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+
+        <br/>
+        <p>Advance setting</p>
+
+        <div>
+            <p>Data normalization:</p>
+            <label><input type='radio' name='normalization' value='minmax' checked/>Min-Max Scaler</label>
+            <label><input type='radio' name='normalization' value='standard'/>Standard Scaler</label>
+            <label><input type='radio' name='normalization' value='robust'/>Robust Scaler</label>
+            <!--<label><input type='radio' name='normalization' value='normalizer'/>Normalizer</label>-->
+        </div>
+        <div>
+            <p>Missing values:</p>
+            <label><input type='radio' name='missing' value='drop' checked/>Dropping</label>
+            <label><input type='radio' name='missing' value='mean'/>Mean-Impute</label>
+            <label><input type='radio' name='missing' value='median'/>Median-Impute</label>
+            <label><input type='radio' name='missing' value='most_frequent'/>Mode-Impute</label>
+        </div>
+        <div>
+            <label><input type='checkbox' name='crossval' value='crossval'/>Cross Validation</label><br/>
+            <label>Test size: <input type='text' name='test-size' value=''/></label>
+        </div>
+
+        <div>
+            <label><input type='radio' name='cv_method' value='kfold' checked/>K-Fold</label>
+            <label><input type='radio' name='cv_method' value='loo'/>Leave-One-Out</label>
+            <label><input type='radio' name='cv_method' value='stratkfold'/>Stratified K-Fold</label>
+        <div>
+            <label><input type='checkbox' name='dim_red' value='dim_red'/>Dimension reduction:</label>
+            <input type='text' name='dimension' value=''/>
+        </div>
+
+        <div>
+            <label><input type='radio' name='tuning' value='randoms' checked/>RandomizedSearch</label>
+            <label><input type='radio' name='tuning' value='grids'/>GridSearch</label>
+        <div>
+            <p>Metrics:</p>
+            <label><input type='checkbox' name='metrics' value='acc' checked/>Accuracy</label>
+            <label><input type='checkbox' name='metrics' value='precision' checked/>Precision</label>
+            <label><input type='checkbox' name='metrics' value='recall' checked/>Recall</label>
+            <label><input type='checkbox' name='metrics' value='f1'/>F1 Score</label>
+            <label><input type='checkbox' name='metrics' value='roc' checked/>ROC-AUC/label>
+            <label><input type='checkbox' name='metrics' value='mcc'/>MCC</label>
+        </div>
+
+        </form>
+        <br/>
+        <h3>Copyright 2019. Rizki Mardian</h3>
+    </body>
+</html>

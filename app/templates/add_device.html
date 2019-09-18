@@ -1,0 +1,190 @@
+{% extends "layout.html" %}
+
+{%  block content %}
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left utitle">
+                <h3>Add Data</h3>
+            </div>
+
+            <div class="utitle_right">
+                <div class="col-md-6 col-sm-6 col-xs-12 form-group pull-right top_search">
+                    <select id="sheet" class="form-control">
+                        <!--<option>Choose Schema</option>-->
+                        <option value="add_device.html" selected="selected">Create Device</option>
+                        <option value="add.html">Create Part</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Create Entry: Device <!--<small>Choose your schema</small>--></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <!--<li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                              <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Settings 1</a>
+                                </li>
+                                <li><a href="#">Settings 2</a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>-->
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <p class="umessage">{{ message }}</p>
+                        <br/>
+                        <form id="demo-form2" class="form-horizontal form-label-left" method="post">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="library_id">Name <span class="required">*</span>
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <input type="text" name="name" required="required" class="form-control col-md-7 col-xs-12"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="displayId">Display Id
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <input type="text" name="displayId" class="form-control col-md-7 col-xs-12"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Role</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <select name="role" class="form-control col-md-7 col-xs-12">
+                                        <option value="" selected="selected">--Choose a role (if any)--</option>
+                                        <option value="Module">Module</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Sequence from parts</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <select name="createSeqFromParts" class="form-control col-md-7 col-xs-12">
+                                        <option value="True" selected="selected">Yes</option>
+                                        <option value="False">No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Part Ids <span class="required">*</span>
+                                </label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <input type="text" name="partIds" class="form-control col-md-7 col-xs-12" placeholder="At least 1 valid part ID is required" required="required"/>
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+
+                            <div class="query-container">
+                                <div class="form-group div-query">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Parameters
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text" name="parameters" class="form-control col-md-7 col-xs-12"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <button type="cancel" class="btn btn-primary">Cancel</button>
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <br/>
+
+                        </form>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                <button class="btn btn-info parts-add" style="width:150px">Add Parameters</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <button class="btn btn-info parts-add" style="width:150px">Add Parts</button>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+{% endblock %}
+
+{% block add_script %}
+<!-- Custom Function: OnClick, OnClose-->
+<script>
+    /*<![CDATA[*/
+    $(document).ready(function(){
+
+        $(".close-query").click (function () {
+            var e=$(this).closest(".div-query");
+            e.remove();
+        });
+
+        $(".parts-add").click (function () {
+            //$(".add-button").remove();
+            $(".query-container").append("<div class='form-group div-query'><label class='control-label col-md-3 col-sm-3 col-xs-12'></label><div class='col-md-8 col-sm-8 col-xs-12'><input type='text' name='parameters' class='form-control col-md-7 col-xs-12' th:field='*{parameters}'/></div><div class='col-md-1 col-sm-1 col-xs-1'><ul class='nav panel_toolbox'><li><a class='close-query'><i class='fa fa-close'></i></a></li></ul></div></div>");
+        });
+
+        $(document).on('click', '.close-query', function(){
+            var e=$(this).closest(".div-query");
+            e.remove();
+        });
+    });
+    /*]]>*/
+</script>
+
+<!-- Onchange combobox -->
+<script>
+    $(function(){
+      // bind change event to select
+      $('#sheet').on('change', function () {
+          var url = $(this).val(); // get selected value
+          if (url) { // require a URL
+              window.location = url; // redirect
+          }
+      });
+    });
+</script>
+<!-- /Onchange combobox -->
+<!-- Autosize -->
+<script>
+  $(document).ready(function() {
+    autosize($('.resizable_textarea'));
+  });
+</script>
+<!-- /Autosize -->
+{% endblock %}

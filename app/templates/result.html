@@ -1,0 +1,181 @@
+{% extends "layout.html" %}
+
+{%  block content %}
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left utitle">
+                <h3>Search results</h3>
+            </div>
+
+            <!--<div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Filter search..."/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Search results</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content" ng-app="myApp" ng-controller="myCtrl">
+                        <p class="umessage">{{ message }}</p>
+                        <div class="row">
+
+                            <!-- LIST -->
+                            <div class="col-sm-3">
+                                <button id="listview" class="btn btn-sm btn-success btn-block" type="button">LIST VIEW</button>
+                                <br/>
+                                <div style="height:550px;overflow-y:auto;">
+                                    <a href="#" ng-repeat="re in results track by $index" id="entry{{'{{$index}}'}}" onclick="toogleDisplay(this.id)">
+                                        <div class="mail_list">
+                                            <div class="left">
+                                                <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <div class="right">
+                                                <h3>{{ '{{ re.name }}' }}</h3>
+                                                <p>Created by: {{ '{{ re.userId }}' }}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- /LIST -->
+
+                            <!-- CONTENT -->
+                            <div class="col-sm-9 mail_view inbox-body ucontainer" style="height:600px">
+
+                                <div id="contentx">
+                                    <div id="uprintable" class="mail_heading row">
+                                        <br/>
+                                        <br/>
+                                        <h3 class="usearchres">Click on entries to see detailed information</h3>
+                                    </div>
+                                </div>
+
+
+                                <div ng-repeat="re in results track by $index" id="content{{'{{$index}}'}}" style="display: none">
+                                    <div id="uprintable" class="mail_heading row">
+                                        <div class="col-md-8">
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-circle-o-notch"></i> Map View</button>
+                                                <button class="btn btn-sm btn-default" type="button"  data-placement="top" data-toggle="tooltip" data-original-title="Forward"><i class="fa fa-share"></i> Detailed View</button>
+                                                <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Print" onclick="printJS('uprintable', 'html')"><i class="fa fa-print"></i> Export</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <button class="btn btn-sm btn-primary" type="button">Edit</button>
+                                            <button class="btn btn-sm btn-default" type="button" id="{{ '{{ re._id }}' }}" ng-click="deleteEntry($event)"><i class="fa fa-trash-o"></i> Delete</button>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h4 class="uctitle">{{ '{{ re.name }}' }}   <span class="badge">Owner Id: {{ '{{ re.userId }}' }}</span></h4>
+                                        </div>
+                                        <div class="ucenter">
+                                            <pre style="text-align:left;padding:30px">
+                                                <p>Object ID: {{ '{{ re._id}}' }}</p>
+                                                <p>Name: {{ '{{ re.name }}' }}</p>
+                                                <p>Type: {{ '{{ re.type }}' }}</p>
+                                                <p>Number of Parts: {{ '{{ re.parts.length }}' }}</p>
+                                                <p ng-repeat="part in re.parts" style="padding-left:50px">{{ '{{ part.name }}' }} - {{ '{{ part.role }}' }}</p>
+                                            </pre>
+                                            <!--<img src="images/generated/1.png"/>-->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--<button type="button" onclick="printJS('uprintable', 'html')">
+                                    Print Form
+                                </button>-->
+
+                            </div>
+
+                            <!-- /CONTENT MAIL -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+
+{% endblock %}
+
+{% block add_script %}
+    <!-- Angular Plasmid -->
+    <script src="{{ url_for('static', filename='js/angular.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/angularplasmid.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/print.min.js') }}"></script>
+	
+	<script>
+
+        var ang = angular.module('myApp', []);
+        ang.controller('myCtrl', function($http, $scope) {
+            $scope.results = JSON.parse('{{ results|tojson }}');
+
+            $scope.deleteEntry = function(event) {
+
+                alert(event.target.id)
+                $http({
+                    method: 'POST',
+                    url: '/delete',
+                    data: {
+                        id: event.target.id
+                    }
+                }).then(function (response) {
+                    $scope.response = response.data;
+                    alert("Deleting with object with ID: " + $scope.response);
+                }, function (error) {
+                    alert("Error with a message: " + error);
+                });
+            }
+        });
+
+	</script>
+    <!-- Onchange combobox -->
+    <script>
+        $(function(){
+          // bind change event to select
+          $('#sheet').on('change', function () {
+              var url = $(this).val(); // get selected value
+              if (url) { // require a URL
+                  window.location = url; // redirect
+              }
+          });
+        });
+    </script>
+    <!-- /Onchange combobox -->
+
+    <script>
+        function toogleDisplay(id){
+
+            $('[id^="content"]').hide();
+            $('#content' + id.replace("entry", "")).show();
+        }
+    </script>
+
+    <!-- Autosize -->
+    <script>
+      $(document).ready(function() {
+        autosize($('.resizable_textarea'));
+      });
+    </script>
+    <!-- /Autosize -->
+
+{% endblock %}

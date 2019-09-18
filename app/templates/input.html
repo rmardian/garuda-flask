@@ -1,0 +1,15 @@
+<html>
+<head>
+    <title>AEGIS v0.1</title>
+</head>
+<body>
+    <h1>Aegis</h1>
+    <h2>Task to run: {{ task_name }}</h2>
+    <br/>
+    <form action="{{ url_for('pipeline') }}" method="post">
+        <input type="submit" name="submit">
+    </form>
+    <br/>
+    <h3>Copyright 2019. Athena</h3>
+ </body>
+</html>

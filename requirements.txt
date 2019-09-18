@@ -1,0 +1,9 @@
+flask
+pandas
+pymongo
+scikit-learn
+xgboost
+lgbm
+requests
+tensorflow
+keras
