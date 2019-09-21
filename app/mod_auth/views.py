@@ -1,37 +1,47 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 
 auth_blueprint = Blueprint('auth', __name__)
 
+from app.mod_auth.controllers import log_in, create_user
+
 @auth_blueprint.route('/auth')
-def ingest():
-    return 'success!'
-    #return render_template('load/index.html')
+def auth():
+    return 'Authentication module!'
 
-'''
-@load_blueprint.route('/form', methods=['POST', 'GET'])
-def ingest():
-    
-    if request.method == "POST":
+@auth_blueprint.route("/register", methods=['POST'])
+def register():
 
-        name = request.form['name']
-        description = request.form['description']
+	if request.method == 'POST':
+		session_user, authHeader = create_user(request.form['username'], request.form['password'], request.form['email'], request.form['name'])
+		if session_user != None:
+			session['user'] = session_user
+			session['logged_in'] = True
+			session['authHeader'] = authHeader
+			return redirect(url_for('search'))
+		return render_template('login.html', message="Error: Username or email has been taken!")
+	return render_template('login.html')
 
-        user = User(name, description)
-        x = collection.insert_one(user.__dict__)
+@auth_blueprint.route("/login.html", methods=['GET', 'POST'])
+@auth_blueprint.route("/login", methods=['GET', 'POST'])
+def login():
 
-        return redirect(url_for('load.ingested',
-                                name=name,
-                                description=description))
-    
-    return render_template('load/input.html')
+	if request.method == 'POST':
+		#send request for authentication
+		session_user, authHeader = log_in(request.form['username'], request.form['password'])
+		if session_user != None:
+			session['user'] = session_user
+			session['logged_in'] = True
+			session['authHeader'] = authHeader
+			return redirect(url_for('recommender'))
+		return render_template('login.html', message="Login error! Please check your username and password")
+	return render_template('login.html')
 
-@load_blueprint.route('/show', methods=['GET'])
-def ingested():
-    name = request.args.get('name')
-    description = request.args.get('description')
-    return render_template("load/output.html",
-                           name=name,
-                           description=description)
-'''
+@auth_blueprint.route('/logout.html', methods=['GET', 'POST'])
+@auth_blueprint.route('/logout', methods=['GET', 'POST'])
+def logout():
+	session.pop('user', None)
+	session.pop('logged_in', None)
+	session.pop('authHeader', None)
+	return redirect(url_for('auth.login'))
 
 

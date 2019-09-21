@@ -7,16 +7,73 @@
     <div class="">
         <div class="page-title">
             <div class="title_left utitle">
-                <h3>Run Analysis</h3>
+                <h3>Data Review</h3>
                 <br/>
             </div>
         </div>
         <div class="clearfix"></div>
 
-        <form action="{{ url_for('eda.run') }}" method='post'>
+        <form action="{{ url_for('ml.run') }}" method='POST'>
 
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Main Setting</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label>Dataset name:</label>
+                                <input type='text' class="form-control" name='filename' value='{{ filename }}' readonly/>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label>Model name:</label>
+                                <input type='text' class="form-control" name='model_name' value='{{ model_name }}'/>
+                            </div>
+                        </div>
+                        <div class="small-spacer"></div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label>Target variable:</label>
+                                <select id='target_select' class='select2_group form-control' name='target_single'>
+                                    <option value='empty' selected>--Select a target variable--</option>
+                                    {% for row in data %}
+                                    <option value='{{row[0]}}'>{{row[0]}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <label>Type of learning:</label>
+                                <select id='mode_select' class='select2_group form-control' name='mode' onChange="populateMetrics()">
+                                    <option value='classification' selected>Classification</option>
+                                    <option value='regression'>Regression</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="small-spacer"></div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <input type="checkbox" class="flat" name='contribute' value='agree' checked="checked"/>   I agree to contribute my data to the community. Opt out if you do not wish to share your data.</p>
+                            </div>
+                        </div>
+                        <div class="small-spacer"></div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <input type='submit' name='submit' value='Execute' class="btn btn-success run" onClick="checkTarget()"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">       
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Data Summary</h2>
@@ -26,58 +83,54 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-
-                        <div>
-                            <label>Dataset name:</label>
-                            <input type='text' name='filename' value='{{ filename }}' readonly/>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12" style='overflow-x: auto;'>
+                                <table class='table table-striped'>
+                                    <tr>
+                                        <!--<th class='eda-th'>target variable</th>-->
+                                        <th class='eda-th'>drop?</th>
+                                        {% for column in columns %}
+                                            <th class='eda-th'>{{column}}</th>
+                                        {% endfor %}
+                                    </tr>
+                                    {% for row in data %}
+                                    <tr>
+                                        <!--<td class='eda-td'><span class='targetVar'><input type='checkbox' name='target' value='{{row[0]}}'/></span></td>-->
+                                        <td class='eda-td'><input type='checkbox' name='drop' value='{{row[0]}}'/></td>
+                                        {% for col in row %}
+                                            {% if loop.index==3 %}
+                                                {% if col==0 %}
+                                                    <td class='eda-td'></td>
+                                                {% elif col==1 %}
+                                                    <td class='eda-td'>
+                                                        <select name='todo_datetime'>
+                                                            <!--<option value='drop' selected>Drop</option>-->
+                                                            <option value='category'>To Categorical</option>
+                                                            <option value='factorize'>Factorize</option>
+                                                        </select>
+                                                    </td>
+                                                {% elif col==2 %}
+                                                    <td class='eda-td'>
+                                                        <select name='todo_text'>
+                                                            <!--<option value='drop' selected>Drop</option>-->
+                                                            <option value='category'>To Categorical</option>
+                                                        </select>
+                                                    </td>
+                                                {% endif %}
+                                            {% else %}
+                                                <td class='eda-td'>{{col}}</td>
+                                            {% endif %}
+                                    {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
                         </div>
-
-                        <!--<div id="container"></div>-->
-
-                        <input type='submit' name='submit' value='supervised' class="btn btn-success"/>
-                        <input type='submit' name='submit' value='unsupervised' class="btn btn-success"/>
-                        <input type='submit' name='submit' value='reinforcement' class="btn btn-success"/>
-
-                        <br/>
-                        <table border=1>
-                            <tr>
-                                <th>target variable</th>
-                                <th>drop?</th>
-                                {% for column in columns %}
-                                    <th>{{column}}</th>
-                                {% endfor %}
-                            </tr>
-                            {% for row in data %}
-                            <tr>
-                                <td><input type='checkbox' name='target' value='{{row[0]}}'/></td>
-                                <td><input type='checkbox' name='drop' value='{{row[0]}}'/></td>
-                                {% for col in row %}
-                                    {% if loop.index==3 %}
-                                        {% if col==0 %}
-                                            <td></td>
-                                        {% elif col==1 %}
-                                            <td>
-                                                <select name='todo_datetime'>
-                                                    <!--<option value='drop' selected>Drop</option>-->
-                                                    <option value='category'>To Categorical</option>
-                                                    <option value='factorize'>Factorize</option>
-                                                </select>
-                                            </td>
-                                        {% elif col==2 %}
-                                            <td>
-                                                <select name='todo_text'>
-                                                    <!--<option value='drop' selected>Drop</option>-->
-                                                    <option value='category'>To Categorical</option>
-                                                </select>
-                                            </td>
-                                        {% endif %}
-                                    {% else %}
-                                        <td>{{col}}</td>
-                                    {% endif %}
-                            {% endfor %}
-                            </tr>
-                            {% endfor %}
-                        </table>
+                        <p class="umessage" id="cls_info" style="display:none;">Running Binary Classification</p>
+                        <p class="umessage" id="mccls_info" style="display:none;">Running Multi-Class Classification</p>
+                        <p class="umessage" id="mlcls_info" style="display:none;">Running Multi-Label Classification</p>
+                        <p class="umessage" id="reg_info" style="display:none;">Running Classification</p>
+                        
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -88,53 +141,123 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Advanced settings</h2>
+                        <h2>Advanced Settings</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                         </ul>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <div>
-                            <p>Data normalization:</p>
-                            <label><input type='radio' name='normalization' value='minmax' checked/>Min-Max Scaler</label>
-                            <label><input type='radio' name='normalization' value='standard'/>Standard Scaler</label>
-                            <label><input type='radio' name='normalization' value='robust'/>Robust Scaler</label>
+                        <div class="row form-group">
+                            <label class="control-label col-md-2 col-sm-12 col-xs-12">Missing values:</label>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <select class='select2_group form-control' name='missing'>
+                                    <option value='drop' selected>Dropping</option>
+                                    <option value='mean'>Mean Imputation</option>
+                                    <option value='median'>Median Imputation</option>
+                                    <option value='most_frequent'>Mode Imputation</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                            </div>
                         </div>
-                        <div>
-                            <p>Missing values:</p>
-                            <label><input type='radio' name='missing' value='drop' checked/>Dropping</label>
-                            <label><input type='radio' name='missing' value='mean'/>Mean-Impute</label>
-                            <label><input type='radio' name='missing' value='median'/>Median-Impute</label>
-                            <label><input type='radio' name='missing' value='most_frequent'/>Mode-Impute</label>
+                        <div class="row form-group">
+                            <label class="control-label col-md-2 col-sm-12 col-xs-12">Categorical encoding:</label>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <select class='select2_group form-control' name='encoding'>
+                                    <option value='none' selected>--</option>
+                                    <option value='label'>Label Encoding</option>
+                                    <option value='one-hot'>One-Hot Encoding</option>
+                                    <option value='binary'>Binary Encoding</option>
+                                    <option value='count'>Count Encoding</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                            </div>
                         </div>
-                        <div>
-                            <label><input type='checkbox' name='crossval' value='crossval'/>Cross Validation</label><br/>
-                            <label>Test size: <input type='text' name='test-size' value='0.2'/></label>
+                        <div class="row form-group">
+                            <label class="control-label col-md-2 col-sm-12 col-xs-12">Data scaling:</label>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <select class='select2_group form-control' name='normalization'>
+                                    <option value='none' selected>None</option>
+                                    <option value='minmax'>Min-Max Scaling</option>
+                                    <option value='standard'>Standard Scaling</option>
+                                    <option value='robust'>Robust Scaling</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                            </div>
                         </div>
-                        <div>
-                            <p>Cross validation:</p>
-                            <label><input type='radio' name='cv_method' value='kfold' checked/>K-Fold</label>
-                            <label><input type='radio' name='cv_method' value='loo'/>Leave-One-Out</label>
-                            <label><input type='radio' name='cv_method' value='stratkfold'/>Stratified K-Fold</label>
+                        <div class="row form-group">
+                            <label class="control-label col-md-2 col-sm-12 col-xs-12">Dimension reduction:</label>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <input type='text' class="form-control" name='dim_red' value=''/>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                            </div>
                         </div>
-                        <div>
-                            <label><input type='checkbox' name='dim_red' value='dim_red'/>Dimension reduction:</label>
-                            <input type='text' name='dimension' value=''/>
+                        <div class="row form-group">
+                            <label class="control-label col-md-2 col-sm-12 col-xs-12">Validation method:</label>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <select id='cv_select' class='select2_group form-control' name='validation' onChange="activateFold()">
+                                    <option value='holdout' selected>Train-Validation-Holdout</option>
+                                    <option value='crossval'>Cross Validation</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                            </div>
                         </div>
-                        <div>
-                            <p>Hyper-parameter Tuning:</p>
-                            <label><input type='radio' name='tuning' value='randoms' checked/>RandomizedSearch</label>
-                            <label><input type='radio' name='tuning' value='grids'/>GridSearch</label>
+                        <div class="row form-group">
+                            <label class="control-label col-md-2 col-sm-12 col-xs-12">Number of folds:</label>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <input id='fold_text' type='text' class="form-control" name='fold' value='5' disabled='disabled'/>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                            </div>
                         </div>
-                        <div>
-                            <p>Metrics:</p>
-                            <label><input type='checkbox' name='metrics' value='acc' checked/>Accuracy</label>
-                            <label><input type='checkbox' name='metrics' value='precision' checked/>Precision</label>
-                            <label><input type='checkbox' name='metrics' value='recall' checked/>Recall</label>
-                            <label><input type='checkbox' name='metrics' value='f1' checked/>F1 Score</label>
-                            <label><input type='checkbox' name='metrics' value='roc' checked/>ROC-AUC Score</label>
-                            <label><input type='checkbox' name='metrics' value='mcc'/>MCC</label>
+                        <div class="row form-group">
+                            <label class="control-label col-md-2 col-sm-12 col-xs-12">Holdout size:</label>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                    <input type='text' class="form-control" name='holdout' value='0.2'/>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="control-label col-md-2 col-sm-12 col-xs-12">Hyperparameter tuning:</label>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <select class='select2_group form-control' name='tuning'>
+                                    <option value='none' selected>None</option>
+                                    <option value='grid'>Grid Search</option>
+                                    <option value='random'>Random Search</option>
+                                    <option value='bayesian'>Bayesian Optimization</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="control-label col-md-2 col-sm-12 col-xs-12">Optimization metrics:</label>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <select id='metrics_select' class='select2_group form-control' name='metrics'>
+                                    <option value='accuracy' selected>Accuracy</option>
+                                    <option value='precision'>Precision</option>
+                                    <option value='recall'>Recall</option>
+                                    <option value='f1'>F1 Score</option>
+                                    <option value='rocauc'>ROC-AUC</option>
+                                    <option value='mcc'>MCC</option>
+                                    <option value='ks'>KS Score</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <!--<select id='metrics_select2' class='select2_group form-control' name='reg_metrics'>
+                                    <option value='mse' selected>MSE</option>
+                                    <option value='rmse'>RMSE</option>
+                                    <option value='mae'>MAE</option>
+                                    <option value='mape'>MAPE</option>
+                                    <option value='r2'>R2</option>
+                                </select>-->
+                            </div>
                         </div>
                     </div>
                     <div class="clearfix"></div>

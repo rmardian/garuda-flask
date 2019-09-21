@@ -9,6 +9,7 @@
 
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/user.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/green.css') }}"/>
 
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom.min.css') }}"/>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}"/>
@@ -28,7 +29,7 @@
                         <div class="clearfix"></div>
                         <!-- menu profile quick info -->
                         <div class="profile" style="text-align:center">
-                            <a href="index.html"><!--<i class="fa fa-paw"></i>--> <img src="{{ url_for('static', filename='images/garuda.png') }}" alt=""/></a>
+                            <a href="{{ url_for('train') }}"><!--<i class="fa fa-paw"></i>--> <img src="{{ url_for('static', filename='images/garuda.png') }}" alt=""/></a>
 
                             <!--<div class="profile_pic">
                                 <img src="images/img.jpg" alt="..." class="img-circle profile_img"/>
@@ -51,7 +52,7 @@
                                         </ul>
                                     </li>-->
 
-                                    <li><a><i class="fa fa-table"></i> Search <span class="fa fa-chevron-down"></span></a>
+                                    <!--<li><a><i class="fa fa-table"></i> Search <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href="search.html">Query</a></li>
                                         </ul>
@@ -62,7 +63,8 @@
                                             <li><a href="add_device.html">Add Data</a></li>
                                             <li><a href="import.html">Import Spreadsheet</a></li>
                                         </ul>
-                                    </li>
+                                    </li>-->
+
                                     <!--<li><a><i class="fa fa-trash"></i> Data Delete <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href="delete.html">Delete</a></li>
@@ -74,12 +76,21 @@
                                         </ul>
                                     </li>-->
 
-                                    <li><a><i class="fa fa-bar-chart-o"></i> Analysis <span class="fa fa-chevron-down"></span></a>
+                                    <!--<li><a><i class="fa fa-bar-chart-o"></i> Analysis <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href="recommender.html">Toxicity Analyzer</a></li>
                                             <li><a href="eda/index.html">Auto ML</a></li>
                                             <li><a href="neural-net/index.html">DAFD/Garuda</a></li>
 
+                                        </ul>
+                                    </li>-->
+
+
+                                    <li><a><i class="fa fa-bar-chart-o"></i> Run Analysis <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="{{ url_for('train') }}">Model Training</a></li>
+                                            <li><a href="{{ url_for('test') }}">Prediction</a></li>
+                                            <!--<li><a href="{{ url_for('clustering') }}">Clustering</a></li>-->
                                         </ul>
                                     </li>
                                 </ul>
@@ -116,27 +127,29 @@
                             <ul class="nav navbar-nav navbar-right">
                                 {% if not session.logged_in %}
                                 <li class="notLoggedIn">
-                                    <li><a href="login.html">Log In   <i class="fa fa-sign-in fa-align-center"></i></a></li>
+                                    <li><a href="{{ url_for('auth.login') }}">Log In   <i class="fa fa-sign-in fa-align-center"></i></a></li>
                                 </li>
                                 {% else %}
                                 <li class="userLoggedIn">
                                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         <img src="{{ url_for('static', filename='images/user.png') }}"/>
-                                        {% print session.user %}   <span class=" fa fa-angle-down"></span>
+                                        Welcome, {% print session.user %}!   <span class=" fa fa-angle-down"></span>
                                     </a>
-                                    <ul class="dropdown-menu dropdown-usermenu pull-right" >
-                                        <!--<li><a href="javascript:;"> Profile</a></li>
+                                    <!-- 
+                                        Uncomment this when mod_auth work properly 
+                                        <ul class="dropdown-menu dropdown-usermenu pull-right" >
+                                        <li><a href="javascript:;"> Profile</a></li>
                                         <li>
                                             <a href="javascript:;">
                                                 <span>Settings</span>
                                             </a>
-                                        </li>-->
+                                        </li>
                                         <li>
                                             <form action="/logout" method="post">
                                                 <button class="logoutButton" type="submit" id="submitButton"> Log Out </button>
                                             </form>
                                         </li>
-                                    </ul>
+                                    </ul>-->
                                 </li>
                                 {% endif %}
 
@@ -199,7 +212,7 @@
                 <!-- /FOOTER -->
                 <footer>
                     <div class="pull-right">
-                        GARUDA &copy; CIDAR Lab and MIT Broad Foundry. 2017-2018
+                        GARUDA &copy; CIDAR Lab at Boston University. 2017-2019
                     </div>
                     <div class="clearfix"></div>
                 </footer>
@@ -217,6 +230,11 @@
                 <script src="{{ url_for('static', filename='js/custom.min.js') }}"></script>
                 <!-- Autosize -->
                 <script src="{{ url_for('static', filename='js/autosize.min.js') }}"></script>
+                <!-- Form checker -->
+                <script src="{{ url_for('static', filename='js/form-checker.js') }}"></script>
+
+                <script src="{{ url_for('static', filename='js/icheck.min.js') }}"></script>
+                <script src="{{ url_for('static', filename='js/switchery.min.js') }}"></script>
                 <!-- Custom Function: OnClick, OnClose-->
                 <script>
                     /*<![CDATA[*/

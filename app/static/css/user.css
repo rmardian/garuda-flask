@@ -5,8 +5,35 @@
 .uwselect{width:300px}
 .utitle_right{width:55%;float:left;display:block;margin:10px 0}
 .ufixed_height_360{height:360px}
-.umessage{color:#bf7e82;font-size:20px}
+.umessage {
+    color:#bf7e82;
+    font-size:18px;
+    display:'none';
+}
 .utitle{height:70px}
 .logoutButton{border:none;outline:none;background:none;cursor:pointer;padding:12px 20px;color:#5A738E;width:100%;text-align:left}
 .logoutButton:hover{background-color:#f7f7f7}
 .ucenter{text-align:center;padding:10px}
+
+.small-spacer {
+    height: 10px;
+}
+.spacer {
+    height: 20px;
+}
+.eda-text {
+    width: 100%;
+    background: #e7e7e7;
+}
+.eda-table {
+    font-size: 14px;
+}
+.eda-th {
+    color: white;
+    background: #5A738E;
+    font-weight: normal;
+}
+.eda-cmbx {
+    width: 100%;
+    height: 70px;
+}

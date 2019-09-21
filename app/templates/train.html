@@ -7,7 +7,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left utitle">
-                <h3>Run Analysis </h3>
+                <h3>Perform Model Training</h3>
                 <br/>
             </div>
         </div>
@@ -25,9 +25,10 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <form action="{{ url_for('eda.upload') }}" method="post" enctype = "multipart/form-data">
-                            <input type="file" name="file" class="form-control"/><br/>
-                            <input type="submit" name="submit" class="btn btn-success"/>
+                        <!--<p class="umessage" th:text="${app.getMessage()}"></p>-->
+                        <form method="POST" action="{{ url_for('eda.upload') }}" enctype="multipart/form-data">
+                            <input type="file" class="form-control" name="file" /><br/>
+                            <input type="submit" class="btn btn-success" name="submit" value="Submit" />
                         </form>
                     </div>
                 </div>
@@ -36,4 +37,5 @@
     </div>
 </div>
 <!-- /page content -->
+
 {% endblock %}

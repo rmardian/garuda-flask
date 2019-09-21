@@ -7,7 +7,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left utitle">
-                <h3>Make Prediction</h3>
+                <h3>405 Error</h3>
                 <br/>
             </div>
         </div>
@@ -18,18 +18,18 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Import your dataset</h2>
+                        <h2>Something went wrong...</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                         </ul>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <!--<p class="umessage" th:text="${app.getMessage()}"></p>-->
-                        <form method="POST" action="{{ url_for('eda.upload') }}" enctype="multipart/form-data">
-                            <input type="file" class="form-control" name="file" /><br/>
-                            <input type="submit" class="btn btn-success" name="submit" value="Submit" />
-                        </form>
+                        <h3>Method not allowed error!</h3>
+                        <p>Sorry action is not allowed...</p><br/>
+                        
+                        <a href="{{ url_for('train') }}" class="btn btn-success">Go Back to Model Training</a>
+                        <a href="{{ url_for('test') }}" class="btn btn-success">Go Back to Prediction</a>
                     </div>
                 </div>
             </div>
