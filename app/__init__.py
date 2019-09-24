@@ -8,12 +8,18 @@ from app.mod_clotho.views import clotho_blueprint
 from app.mod_parser.views import parser_blueprint
 from app.mod_eda.views import eda_blueprint
 from app.mod_ml.views import ml_blueprint
+from app.mod_deploy.views import deploy_blueprint
+from app.mod_predict.views import predict_blueprint
+
+from app.mod_tempdb.controllers import populateDeployedModel, generateModelTable
 
 app.register_blueprint(auth_blueprint, url_prefix='/auth')
 app.register_blueprint(clotho_blueprint, url_prefix='/clotho')
 app.register_blueprint(parser_blueprint, url_prefix='/parser')
 app.register_blueprint(eda_blueprint, url_prefix='/eda')
 app.register_blueprint(ml_blueprint, url_prefix='/ml')
+app.register_blueprint(deploy_blueprint, url_prefix='/deploy')
+app.register_blueprint(predict_blueprint, url_prefix='/predict')
 
 @app.route("/")
 @app.route("/index.html")
@@ -39,7 +45,8 @@ def train():
 @app.route('/test', methods=['GET', 'POST'])
 def test():
 	if 'user' in session and session['logged_in'] == True:
-		return render_template('test.html')
+		return render_template('test.html', models=populateDeployedModel(),
+								tables=generateModelTable())
 	return redirect(url_for('auth.login'))
 
 @app.route('/clustering.html', methods=['GET', 'POST'])
@@ -51,11 +58,7 @@ def clustering():
 
 @app.errorhandler(404) 
 def not_found(e): 
-	return render_template("404.html") 
-
-@app.errorhandler(405)
-def method_not_allowed(e):
-	return render_template("405.html") 
+	return render_template("page_404.html") 
 
 #this still does not work correctly, the idea is to make it possible to generate and utilize API on demand
 #is there any use of this?

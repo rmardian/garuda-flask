@@ -197,3 +197,18 @@ function activateFold() {
         document.getElementById("fold_text").disabled = true;
     }
 }
+
+function updateModelTable() {
+    //var hiddenDiv = document.getElementById("showMe");
+    //hiddenDiv.style.display = (this.value == "") ? "none":"block";
+    alert(document.getElementById("model_select"));
+};
+
+$('#model_select').change(function(){
+    var str = $('#model_select').find(":selected").text();
+    tables = document.getElementsByClassName('model-table')
+    for (i = 0; i < tables.length; i++) {
+        document.getElementById(tables[i].id).style.display = "none";
+    }
+    document.getElementById(str.split(' - ')[0]).style.display = "block";
+});

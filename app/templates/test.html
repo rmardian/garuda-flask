@@ -3,17 +3,15 @@
 {%  block content %}
                 
 <!-- page content -->
+<form method="POST" action="{{ url_for('predict.run') }}" enctype="multipart/form-data">
 <div class="right_col" role="main">
     <div class="">
         <div class="page-title">
             <div class="title_left utitle">
                 <h3>Make Prediction</h3>
-                <br/>
             </div>
         </div>
-
         <div class="clearfix"></div>
-
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -25,17 +23,62 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <!--<p class="umessage" th:text="${app.getMessage()}"></p>-->
-                        <form method="POST" action="{{ url_for('eda.upload') }}" enctype="multipart/form-data">
-                            <input type="file" class="form-control" name="file" /><br/>
-                            <input type="submit" class="btn btn-success" name="submit" value="Submit" />
-                        </form>
+                        <input type="file" class="form-control" name="file" /><br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Select a model</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row form-group">
+                            <!--<p>Drag multiple files to the box below for multi upload or click to select files.</p>-->
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <select class='select2_group form-control' name='model' id='model_select'>
+                                    <option value='none' selected>--Choose a model--</option>
+                                    {% for model in models %}
+                                    <option value='{{model[0]}}'>{{ model[0] }} - {{ model[1] }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <input type="submit" class="btn btn-success" name="submit" value="Submit" />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {% for table in tables %}
+                                <div class="model-table" id="{{table[0][1]}}">
+                                    <table class='table table-striped'>
+                                        {% for tr in table %}
+                                        <tr>
+                                            {% for td in tr %}
+                                            <td>{{ td }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</form>
 <!-- /page content -->
 
 {% endblock %}

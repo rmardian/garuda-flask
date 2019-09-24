@@ -7,8 +7,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left utitle">
-                <h3>Perform Model Training</h3>
-                <br/>
+                <h3>Model Test Results</h3>
             </div>
         </div>
 
@@ -18,17 +17,21 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Import your dataset</h2>
+                        <h2>Results</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                         </ul>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <p class="umessage" text="">{{ message }}</p>
-                        <form method="POST" action="{{ url_for('eda.upload') }}" enctype="multipart/form-data">
-                            <input type="file" class="form-control" name="file" /><br/>
-                            <input type="submit" class="btn btn-success" name="submit" value="Submit" />
+                        <p class="umessage" text="">The prediction result is ready!</p>
+                        <form method="POST" action="{{ url_for('predict.download') }}">
+                            <label>Enter a filename:</label>
+                            <input type="text" class="form-control" name="output_name" value="{{ filename }}"/><br/>
+                            <input type="hidden" name="filename" value="{{ filename }}" />
+                            <input type="hidden" name="prediction" value="{{ prediction }}" />
+                            <input type="submit" class="btn btn-success" name="download" value="Download Prediction Only" />
+                            <input type="submit" class="btn btn-success" name="download" value="Download with Full Dataset" />
                         </form>
                     </div>
                 </div>
@@ -37,5 +40,8 @@
     </div>
 </div>
 <!-- /page content -->
+{% endblock %}
+
+{% block add_script %}
 
 {% endblock %}

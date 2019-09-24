@@ -1,0 +1,5 @@
+Model Name,Created At,Mode,Algorithm,Metrics,Performance,Cross-validated,Hyperparameter Tuned,Owner,Description
+md-1569257575160-0,2019-09-23 23:54:45.065299,CLASSIFICATION,Random Forest,ACCURACY,0.97,No,No,garuda,A simple machine learning model deployment example.
+md-1569257575160-4,2019-09-23 23:54:45.065299,CLASSIFICATION,Decision Tree,ACCURACY,0.96,No,No,garuda,A simple machine learning model deployment example.
+md-1569260214037-0,2019-09-24 00:38:06.637930,CLASSIFICATION,Random Forest,ACCURACY,0.917,No,No,garuda,A simple machine learning model deployment example.
+md-1569260214037-1,2019-09-24 00:38:06.637930,CLASSIFICATION,Logistic Regression,ACCURACY,0.917,No,No,garuda,A simple machine learning model deployment example.

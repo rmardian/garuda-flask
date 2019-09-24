@@ -5,10 +5,23 @@
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="">
+            <form action="{{ url_for('deploy.deploy') }}" method='post'>
         <div class="page-title">
             <div class="title_left utitle">
                 <h3>Model Training Results</h3>
                 <br/>
+            </div>
+
+            <div class="utitle_right" style="text-align:right">
+                <div class="col-md-6 col-sm-6 col-xs-12 form-group pull-right">
+                    <input type='hidden' name="cols" value='{{ col_string }}'/>
+                    <input type='hidden' name="vals" value='{{ val_string }}'/>
+                    <input type='hidden' name="owner" value='{{ owner }}'/>
+                    <input type='hidden' name="timestamp" value='{{ timestamp }}'/>
+                    <input type='hidden' name="cv" value='{{ cv }}'/>
+                    <input type='hidden' name="hy" value='{{ hy }}'/>
+                    <input type='submit' class="btn btn-success query-add" value='Deploy Selected Models'/>
+                </div>
             </div>
         </div>
 
@@ -25,30 +38,27 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-
-                        <form action="" method='post'>
-                        
-                        <table class='table table-striped'>
-                            <tr>
-                                {% for column in columns %}
-                                    <th class='eda-th'>{{column}}</th>
+                            <table class='table table-striped'>
+                                <tr>
+                                    <th class='eda-th'>Deployment</th>
+                                    {% for column in columns %}
+                                        <th class='eda-th'>{{column}}</th>
+                                    {% endfor %}
+                                    <th class='eda-th'>Details</th>
+                                </tr>
+                                {% for row in data %}
+                                <tr>
+                                    <td><input type='checkbox' name='deploy' value='{{row[0]}}'/></td>
+                                    {% for col in row %}
+                                        <td>{{col}}</td>
+                                    {% endfor %}
+                                    <td>
+                                        <input type='button' name='details_{{ loop.index }}' value='See details' class="btn btn-info"/>
+                                    </td>
+                                    <!--<td><input type='button' name='api' value='Deploy Model' class="btn btn-info"/></td>-->
+                                </tr>
                                 {% endfor %}
-
-                                <th class='eda-th'>Details</th>
-                                <th class='eda-th'>Deployment</th>
-                            </tr>
-                            {% for row in data %}
-                            <tr>
-                                {% for col in row %}
-                                    <td>{{col}}</td>
-                                {% endfor %}
-                                <td>
-                                    <input type='hidden' name='model' value='{{row[0]}}'/>
-                                    <input type='submit' name='details_{{ loop.index }}' value='See details' class="btn btn-success"/></td>
-                                <td><input type='button' name='api' value='Deploy Model' class="btn btn-info"/></td>
-                            </tr>
-                            {% endfor %}
-                        </table>
+                            </table>
                         </form>
 
                         <div class="clearfix"></div>
