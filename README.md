@@ -8,9 +8,9 @@ This is an on-going work that I (am trying to) update regularly. I am committed 
 
 ## Screenshot
 
-![Model training page (home-page)]('screenshot/01.png')
-![Data overview]('screenshot/02.png')
-![Training results]('screenshot/03.png')
-![Model prediction page]('screenshot/04.png')
-![Prediction results]('screenshot/05.png')
+![Model training page (home-page)](https://github.com/rmardian/garuda-flask/screenshot/01.png)
+![Data overview](https://github.com/rmardian/garuda-flask/screenshot/02.png)
+![Training results](https://github.com/rmardian/garuda-flask/screenshot/03.png)
+![Model prediction page](https://github.com/rmardian/garuda-flask/screenshot/04.png)
+![Prediction results](https://github.com/rmardian/garuda-flask/screenshot/05.png)
 
