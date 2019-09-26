@@ -6,3 +6,11 @@ At the moment, machine learning algorithms supported by Garuda are primarily bas
 
 This is an on-going work that I (am trying to) update regularly. I am committed to release the software as open-source, and I can always use some help from contributors who are passionate in developing tools that will provide access machine learning for everyone.
 
+## Screenshot
+
+![Model training page (home-page)]('screenshot/01.png')
+![Data overview]('screenshot/02.png')
+![Training results]('screenshot/03.png')
+![Model prediction page]('screenshot/04.png')
+![Prediction results]('screenshot/05.png')
+
