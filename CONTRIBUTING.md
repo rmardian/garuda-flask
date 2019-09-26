@@ -1,4 +1,4 @@
-#Contributing to Garuda
+# Contributing to Garuda
 
 First off, thanks for taking your time to contribute!
 
