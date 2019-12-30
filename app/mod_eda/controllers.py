@@ -14,7 +14,7 @@ def validFile(filename):
 def readFile(filename):
 
 	df = pd.read_csv(filename)
-	df.rename(columns={'index': 'date'}, inplace=True)
+	#df.rename(columns={'index': 'date'}, inplace=True)
 
 	return df
 
@@ -37,7 +37,7 @@ def getDataType(filename):
 				val.append('datetime')
 				flag.append(1)		#1 for datetime
 			except:
-				val.append('text')
+				val.append('object')
 				flag.append(2)		#2 for text
 
 	df1 = pd.DataFrame({'column': df.columns.tolist(), 'type': val, 'categorize': flag})

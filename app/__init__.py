@@ -53,7 +53,7 @@ def test():
 @app.route('/clustering', methods=['GET', 'POST'])
 def clustering():
 	if 'user' in session and session['logged_in'] == True:
-		return render_template('login.html')
+		return redirect(url_for('train'))
 	return redirect(url_for('auth.login'))
 
 @app.errorhandler(404) 

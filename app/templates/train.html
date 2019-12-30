@@ -27,8 +27,8 @@
                     <div class="x_content">
                         <p class="umessage" text="">{{ message }}</p>
                         <form method="POST" action="{{ url_for('eda.upload') }}" enctype="multipart/form-data">
-                            <input type="file" class="form-control" name="file" /><br/>
-                            <input type="submit" class="btn btn-success" name="submit" value="Submit" />
+                            <input id="file_name" type="file" class="form-control" name="file" /><br/>
+                            <input type="submit" class="btn btn-success" name="submit" value="Submit"  onClick="checkExtension()"/>
                         </form>
                     </div>
                 </div>

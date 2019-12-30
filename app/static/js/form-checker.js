@@ -37,6 +37,23 @@ $('.run').on('click', function() {
 });
 */
 
+function checkExtension() {
+    var target = document.getElementById('file_name').value;
+    var target_arr = target.split('.');
+
+    var ext = target_arr[target_arr.length-1];
+
+    if (target_arr.length < 2) {
+        alert('Please enter a valid file!');
+        event.preventDefault();
+    }
+
+    else if (ext != 'csv') {
+        alert('Only .csv file is supported!');
+        event.preventDefault();
+    }
+}
+
 //for now single target variable
 function checkTarget() {
     var target = document.getElementById('target_select').value;
