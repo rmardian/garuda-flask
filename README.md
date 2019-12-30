@@ -8,9 +8,10 @@ This is an on-going work that I (am trying to) update regularly. I am committed 
 
 ## Demo
 
-Click the following videos to see Garuda in action.
-[![Garuda Demo - Microfluidics]](https://youtu.be/LSQdfTWk1Tw)
-[![Garuda Demo - Cello Data (Part Prediction)](https://github.com/rmardian/garuda-flask/blob/master/screenshot/01.png)](https://youtu.be/LSQdfTWk1Tw)
+Click the following video links to see Garuda in action.
+
+[Garuda Demo #1 - Microfluidics](https://youtu.be/5QMasGs92oE)
+[Garuda Demo #2 - Cello Data (Part Prediction)](https://youtu.be/LSQdfTWk1Tw)
 
 ## Screenshot
 
