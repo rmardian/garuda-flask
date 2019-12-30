@@ -11,6 +11,7 @@ This is an on-going work that I (am trying to) update regularly. I am committed 
 Click the following video links to see Garuda in action.
 
 [Garuda Demo #1 - Microfluidics](https://youtu.be/5QMasGs92oE)
+
 [Garuda Demo #2 - Cello Data (Part Prediction)](https://youtu.be/LSQdfTWk1Tw)
 
 ## Screenshot
