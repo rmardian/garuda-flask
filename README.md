@@ -10,9 +10,9 @@ This is an on-going work that I update regularly. I am committed to release the 
 
 Click the following video links to see Garuda in action.
 
-[Garuda Demo #1 - Microfluidics](https://youtu.be/5QMasGs92oE)
+[Garuda Demo #1 - Microfluidics Design Automation](https://youtu.be/5QMasGs92oE)
 
-[Garuda Demo #2 - Cello Data (Part Prediction)](https://youtu.be/LSQdfTWk1Tw)
+[Garuda Demo #2 - Genetic Parts Prediction (Cello Data)](https://youtu.be/LSQdfTWk1Tw)
 
 ## Screenshot
 
