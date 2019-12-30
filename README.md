@@ -9,6 +9,7 @@ This is an on-going work that I (am trying to) update regularly. I am committed 
 ## Demo
 
 ![Demo video](https://github.com/rmardian/garuda-flask/blob/master/screenshot/01-garuda-dafd-data.mp4)
+[![Garuda Demo - Cello Data (Part Prediction)](https://github.com/rmardian/garuda-flask/blob/master/screenshot/01.png)](https://youtu.be/LSQdfTWk1Tw)
 
 ## Screenshot
 
