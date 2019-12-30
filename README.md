@@ -6,6 +6,10 @@ At the moment, machine learning algorithms supported by Garuda are primarily bas
 
 This is an on-going work that I (am trying to) update regularly. I am committed to release the software as open-source, and I can always use some help from contributors who are passionate in developing tools that will provide access machine learning for everyone.
 
+## Demo
+
+![Demo video](https://github.com/rmardian/garuda-flask/blob/master/screenshot/01-garuda-dafd-data.mp4)
+
 ## Screenshot
 
 ![Model training page (home-page)](https://github.com/rmardian/garuda-flask/blob/master/screenshot/01.png)
